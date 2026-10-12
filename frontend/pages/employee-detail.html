@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết Nhân sự — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  
+  <style>
+    .profile-header {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to right, var(--color-primary), var(--color-primary-light));
+      z-index: 0;
+    }
+    .profile-avatar-wrapper {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+    }
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid var(--color-surface);
+      background: var(--color-primary-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .profile-info {
+      position: relative;
+      z-index: 1;
+      margin-top: 40px;
+      flex: 1;
+    }
+    .profile-name { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .profile-meta { display: flex; gap: 16px; color: var(--color-text-secondary); margin-bottom: 12px; }
+    .profile-meta-item { display: flex; align-items: center; gap: 6px; }
+    .profile-meta-item i { width: 16px; height: 16px; }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .info-item { margin-bottom: 16px; }
+    .info-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .info-value { font-weight: 500; }
+    
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--color-border); }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item::before { content: ''; position: absolute; left: -24px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--color-primary); border: 4px solid var(--color-surface); }
+    .timeline-date { font-size: 12px; color: var(--color-text-muted); margin-bottom: 4px; }
+    .timeline-title { font-weight: 600; margin-bottom: 4px; }
+    .timeline-desc { color: var(--color-text-secondary); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container" id="profile-container">
+        <div class="mb-4">
+          <a href="/pages/employees.html" class="btn btn-ghost" style="padding-left:0"><i data-lucide="arrow-left"></i> Quay lại danh sách</a>
+        </div>
+        
+        <!-- Rendered by JS -->
+        <div id="profile-content">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text" style="height: 150px"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/modal.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/pages/employee-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tổng quan — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  
+  <style>
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 24px; }
+    .kpi-card { background: var(--color-surface); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: 16px; box-shadow: var(--shadow-sm); }
+    .kpi-icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--color-primary-100); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .kpi-info { flex: 1; }
+    .kpi-label { font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 4px; }
+    .kpi-value { font-size: 28px; font-weight: 700; color: var(--color-text); line-height: 1; margin-bottom: 8px; }
+    .kpi-trend { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+    .kpi-trend.positive { color: var(--color-success); }
+    .kpi-trend.neutral { color: var(--color-text-muted); }
+    .kpi-trend i { width: 14px; height: 14px; }
+    
+    .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media (max-width: 1024px) { .charts-grid { grid-template-columns: 1fr; } }
+    
+    .chart-container { position: relative; height: 300px; width: 100%; }
+    
+    .tables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media (max-width: 1024px) { .tables-grid { grid-template-columns: 1fr; } }
+    
+    .recent-activity { max-height: 400px; overflow-y: auto; }
+    .activity-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--color-border); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); flex-shrink: 0; }
+    .activity-content { flex: 1; }
+    .activity-text { font-size: 14px; margin-bottom: 4px; }
+    .activity-time { font-size: 12px; color: var(--color-text-muted); }
+    
+    .viz-container { position: relative; height: 200px; background: var(--color-primary-dark); border-radius: var(--radius-md); overflow: hidden; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container">
+        <div class="page-header">
+          <h1 class="page-title">Tổng quan</h1>
+        </div>
+        
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon"><i data-lucide="users"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-label">Tổng nhân sự</div>
+              <div class="kpi-value" id="kpi-total">-</div>
+              <div class="kpi-trend neutral"><span id="kpi-new">-</span> mới trong tháng</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:var(--color-success-bg); color:var(--color-success);"><i data-lucide="user-check"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-label">Đang công tác</div>
+              <div class="kpi-value" id="kpi-active">-</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:var(--color-warning-bg); color:var(--color-warning);"><i data-lucide="calendar-off"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-label">Đang nghỉ phép</div>
+              <div class="kpi-value" id="kpi-leave">-</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:var(--color-error-bg); color:var(--color-error);"><i data-lucide="file-warning"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-label">HĐ sắp hết hạn</div>
+              <div class="kpi-value" id="kpi-expiring">-</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="charts-grid">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Biến động nhân sự (6 tháng)</h3></div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="employeeTrendChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Cơ cấu theo đơn vị</h3></div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="deptDistributionChart"></canvas>
+              </div>
+              <div class="viz-container" id="dashboard-viz"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tables-grid">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Nhân sự mới</h3></div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead><tr><th>Mã NV</th><th>Họ tên</th><th>Đơn vị</th><th>Ngày vào</th></tr></thead>
+                  <tbody id="new-employees-table">
+                    <tr><td colspan="4" class="text-center"><div class="skeleton skeleton-text"></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Hoạt động gần đây</h3></div>
+            <div class="card-body recent-activity" id="recent-activity-list">
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div id="toast-container" class="toast-container"></div>
+  <div id="modal-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/modal.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/three/dashboard-viz.js"></script>
+  <script src="/js/pages/dashboard.js"></script>
+</body>
+</html>

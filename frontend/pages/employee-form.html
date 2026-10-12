@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cập nhật Nhân sự — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container">
+        <div class="mb-4">
+          <a href="/pages/employees.html" class="btn btn-ghost" style="padding-left:0"><i data-lucide="arrow-left"></i> Quay lại</a>
+        </div>
+        
+        <div class="page-header">
+          <h1 class="page-title" id="page-title">Thêm mới Nhân sự</h1>
+        </div>
+        
+        <form id="employee-form">
+          <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Thông tin chung</h3></div>
+            <div class="card-body">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label required">Mã nhân viên</label>
+                  <input type="text" id="code" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label required">Họ và tên</label>
+                  <input type="text" id="full_name" class="form-control" required>
+                </div>
+              </div>
+              
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="form-label required">Ngày sinh</label>
+                  <input type="date" id="birth_date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label required">Giới tính</label>
+                  <select id="gender" class="form-select" required>
+                    <option value="">Chọn giới tính</option>
+                    <option value="M">Nam</option>
+                    <option value="F">Nữ</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label required">Số CCCD</label>
+                  <input type="text" id="identity_card" class="form-control" required>
+                </div>
+              </div>
+              
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label">Điện thoại</label>
+                  <input type="tel" id="phone" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" id="email" class="form-control">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Địa chỉ thường trú</label>
+                <input type="text" id="address" class="form-control">
+              </div>
+            </div>
+          </div>
+          
+          <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Thông tin công việc</h3></div>
+            <div class="card-body">
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="form-label">Đơn vị / Phòng ban</label>
+                  <select id="department_id" class="form-select">
+                    <option value="">-- Chọn đơn vị --</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Chức vụ</label>
+                  <select id="position_id" class="form-select">
+                    <option value="">-- Chọn chức vụ --</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label required">Trạng thái</label>
+                  <select id="status" class="form-select" required>
+                    <option value="ACTIVE">Đang công tác</option>
+                    <option value="ON_LEAVE">Nghỉ phép</option>
+                    <option value="RESIGNED">Đã nghỉ việc</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="form-label required">Ngày vào làm</label>
+                  <input type="date" id="hire_date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Trình độ</label>
+                  <input type="text" id="education_level" class="form-control" placeholder="VD: Thạc sĩ">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Chuyên ngành</label>
+                  <input type="text" id="major" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex justify-end gap-3 mb-5">
+            <a href="/pages/employees.html" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-primary" id="btn-save">
+              <i data-lucide="save"></i> Lưu thông tin
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/pages/employee-form.js"></script>
+</body>
+</html>

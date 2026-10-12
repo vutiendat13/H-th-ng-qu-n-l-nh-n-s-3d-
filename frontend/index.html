@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>HDP-HRMS</title>
+  <script>
+    const token = localStorage.getItem('hdp_token');
+    if (token) window.location.href = '/pages/dashboard.html';
+    else window.location.href = '/pages/login.html';
+  </script>
+</head>
+<body></body>
+</html>

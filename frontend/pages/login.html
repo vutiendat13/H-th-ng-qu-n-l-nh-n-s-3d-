@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  <style>
+    .login-container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    .login-left {
+      flex: 1;
+      position: relative;
+      background-color: var(--color-primary);
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .login-left { display: block; }
+    }
+    #login-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .login-right {
+      flex: 1;
+      max-width: 500px;
+      background-color: var(--color-surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px;
+      box-shadow: var(--shadow-xl);
+      z-index: 10;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      color: var(--color-primary);
+    }
+    .login-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+    .login-subtitle {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      cursor: pointer;
+    }
+    .password-toggle:hover {
+      color: var(--color-text);
+    }
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .btn-login {
+      width: 100%;
+      height: 48px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-left">
+      <canvas id="login-canvas"></canvas>
+    </div>
+    
+    <div class="login-right">
+      <div class="login-header">
+        <svg class="login-logo" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="currentColor"/>
+          <path d="M2 23L16 30L30 23V13.5L16 20.5L2 13.5V23Z" fill="currentColor"/>
+        </svg>
+        <h1 class="login-title">Hệ thống Quản lý Nhân sự</h1>
+        <p class="login-subtitle">Trường Đại học Hải Phòng</p>
+      </div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="username">Tên đăng nhập</label>
+          <input type="text" id="username" class="form-control" required placeholder="Nhập tên đăng nhập...">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="password">Mật khẩu</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" class="form-control" required placeholder="Nhập mật khẩu...">
+            <i data-lucide="eye" class="password-toggle" id="toggle-password"></i>
+          </div>
+        </div>
+        
+        <div class="login-options">
+          <label class="form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <span class="form-check-label">Ghi nhớ đăng nhập</span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-login" id="submit-btn">
+          <span>Đăng nhập</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/three/login-scene.js"></script>
+  <script src="/js/pages/login.js"></script>
+</body>
+</html>

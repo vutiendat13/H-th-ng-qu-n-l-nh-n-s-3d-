@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo cáo — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/toast.css">
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container">
+        <div class="page-header">
+          <h1 class="page-title">Báo cáo & Thống kê</h1>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 240px 1fr; gap: 24px;">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Loại báo cáo</h3></div>
+            <div class="card-body p-0">
+              <div style="display: flex; flex-direction: column;">
+                <div class="report-item" style="padding: 12px 16px; border-bottom: 1px solid var(--color-border); background: var(--color-primary-100); color: var(--color-primary); font-weight: 500;">
+                  Báo cáo tổng hợp nhân sự
+                </div>
+                <div class="report-item text-muted" style="padding: 12px 16px; border-bottom: 1px solid var(--color-border);">
+                  Thống kê hợp đồng
+                </div>
+                <div class="report-item text-muted" style="padding: 12px 16px; border-bottom: 1px solid var(--color-border);">
+                  Biến động nhân sự
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header d-flex justify-between align-center">
+              <h3 class="card-title">Báo cáo tổng hợp nhân sự</h3>
+              <button class="btn btn-secondary btn-sm"><i data-lucide="download"></i> Tải PDF</button>
+            </div>
+            <div class="card-body">
+               <div style="height: 300px; margin-bottom: 24px;">
+                 <canvas id="reportChart"></canvas>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireAuth()) return;
+      
+      const ctx = document.getElementById('reportChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['CNTT', 'Kinh tế', 'Ngoại ngữ', 'Toán', 'Hành chính'],
+          datasets: [
+            { label: 'Nam', data: [30, 20, 10, 25, 15], backgroundColor: '#0ea5e9' },
+            { label: 'Nữ', data: [15, 35, 40, 10, 25], backgroundColor: '#f43f5e' }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { x: { stacked: true }, y: { stacked: true } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

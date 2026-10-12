@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Hợp đồng — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container">
+        <div class="page-header">
+          <h1 class="page-title">Hợp đồng Lao động</h1>
+          <div class="page-actions">
+            <button class="btn btn-primary" id="btn-add" data-role="ADMIN,HR">
+              <i data-lucide="plus"></i> Thêm Hợp đồng
+            </button>
+          </div>
+        </div>
+        
+        <div class="card mb-4">
+          <div class="card-body p-3 d-flex gap-3 flex-wrap">
+            <div style="flex: 1; min-width: 200px; position: relative;">
+              <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
+              <input type="text" id="search-input" class="form-control" placeholder="Tìm theo số HĐ hoặc tên nhân sự..." style="padding-left: 36px;">
+            </div>
+            <select id="filter-type" class="form-select" style="width: 180px;">
+              <option value="">Tất cả loại HĐ</option>
+              <option value="DETERMINATE">Xác định thời hạn</option>
+              <option value="INDETERMINATE">Không xác định TH</option>
+              <option value="PROBATION">Thử việc</option>
+            </select>
+            <select id="filter-status" class="form-select" style="width: 180px;">
+              <option value="">Tất cả trạng thái</option>
+              <option value="ACTIVE">Đang hiệu lực</option>
+              <option value="EXPIRING">Sắp hết hạn</option>
+              <option value="EXPIRED">Đã hết hạn</option>
+              <option value="TERMINATED">Đã chấm dứt</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Số HĐ</th>
+                    <th>Nhân sự</th>
+                    <th>Loại HĐ</th>
+                    <th>Từ ngày</th>
+                    <th>Đến ngày</th>
+                    <th>Trạng thái</th>
+                    <th width="100">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="data-table">
+                  <tr><td colspan="7"><div class="skeleton skeleton-text"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="pagination-container" style="padding: 16px;"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div id="toast-container" class="toast-container"></div>
+  <div id="modal-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/modal.js"></script>
+  <script src="/js/ui/confirm.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/ui/pagination.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/pages/contracts.js"></script>
+</body>
+</html>

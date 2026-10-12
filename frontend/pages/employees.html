@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ sơ Nhân sự — HDP-HRMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  
+  <style>
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      background: var(--color-surface);
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+    }
+    .toolbar .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    .toolbar .search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+    }
+    .toolbar .search-box input {
+      padding-left: 36px;
+    }
+    .toolbar .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-select {
+      width: 180px;
+    }
+    .employee-actions {
+      display: flex;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <aside id="sidebar" class="sidebar"></aside>
+  
+  <div class="main-wrapper">
+    <header id="topbar" class="topbar"></header>
+    
+    <main class="main-content">
+      <div class="page-container">
+        <div class="page-header">
+          <h1 class="page-title">Hồ sơ Nhân sự</h1>
+          <div class="page-actions">
+            <button class="btn btn-secondary" id="btn-export">
+              <i data-lucide="download"></i> Xuất Excel
+            </button>
+            <a href="/pages/employee-form.html" class="btn btn-primary" data-role="ADMIN,HR">
+              <i data-lucide="plus"></i> Thêm mới
+            </a>
+          </div>
+        </div>
+        
+        <div class="toolbar">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" class="form-control" id="search-input" placeholder="Tìm kiếm theo mã, họ tên, email...">
+          </div>
+          <div class="filters">
+            <select class="form-select filter-select" id="filter-dept">
+              <option value="">Tất cả đơn vị</option>
+            </select>
+            <select class="form-select filter-select" id="filter-pos">
+              <option value="">Tất cả chức vụ</option>
+            </select>
+            <select class="form-select filter-select" id="filter-status">
+              <option value="">Tất cả trạng thái</option>
+              <option value="ACTIVE">Đang công tác</option>
+              <option value="ON_LEAVE">Nghỉ phép</option>
+              <option value="RESIGNED">Đã nghỉ việc</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th width="40"><input type="checkbox" class="form-check-input" id="check-all"></th>
+                    <th class="cursor-pointer" data-sort="code">Mã NV <i data-lucide="chevrons-up-down" style="width:14px;height:14px;display:inline;"></i></th>
+                    <th class="cursor-pointer" data-sort="full_name">Họ và tên <i data-lucide="chevrons-up-down" style="width:14px;height:14px;display:inline;"></i></th>
+                    <th>Đơn vị</th>
+                    <th>Chức vụ</th>
+                    <th>Trình độ</th>
+                    <th>Trạng thái</th>
+                    <th width="120">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="employees-table">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div id="pagination-container" style="padding: 16px;"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div id="toast-container" class="toast-container"></div>
+  <div id="modal-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui/toast.js"></script>
+  <script src="/js/ui/modal.js"></script>
+  <script src="/js/ui/confirm.js"></script>
+  <script src="/js/ui/sidebar.js"></script>
+  <script src="/js/ui/topbar.js"></script>
+  <script src="/js/ui/pagination.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/pages/employees.js"></script>
+</body>
+</html>
